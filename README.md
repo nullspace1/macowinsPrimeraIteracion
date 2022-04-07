@@ -23,7 +23,7 @@ Se me ocurrió tener al principio un objeto que opere como una interfaz inicial 
 
 Dicho esto, el diagrama de clases:
 
-
+[diagrama]
 
 
 Algunos comentarios:
