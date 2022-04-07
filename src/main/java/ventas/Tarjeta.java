@@ -16,7 +16,8 @@ public class Tarjeta implements MedioDePago {
 
 	@Override
 	public Float modificarPrecio(Float total) {
-		return cantidadDeCuotas * coeficiente + total * 0.01f;
+		Float recargo = cantidadDeCuotas * coeficiente + total * 0.01f;
+		return total + recargo;
 	}
 	
 	
