@@ -23,7 +23,7 @@ Se me ocurrió tener al principio un objeto que opere como una interfaz inicial 
 
 Dicho esto, el diagrama de clases:
 
-[diagrama]
+[diagrama]https://github.com/nullspace1/macowinsPrimeraIteracion/blob/main/Ej%20I.drawio.png
 
 
 Algunos comentarios:
