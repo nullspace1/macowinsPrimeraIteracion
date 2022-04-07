@@ -28,7 +28,7 @@ Dicho esto, el diagrama de clases:
 
 Algunos comentarios:
 
-- Para el primer requerimiento, la consulta por una prenda se realiza primero a CoordinadorDeVentas - este se encarga de buscar en la colección (o base de datos, lo que sea) de ropa disponible y devolver un objeto de Ropa, al cual podemos realizar todas las consultas pertinentes, o establecer el parámetro de estado.
+- Para el primer requerimiento, la consulta por una prenda se realiza primero a CoordinadorDeVentas - este se encarga de buscar en la colección (implementada aca simplemente como un Set) de ropa disponible y devolver un objeto de Ropa, al cual podemos realizar todas las consultas pertinentes, o establecer el parámetro de estado.
 Similarmente, para el segundo requerimiento, se le envía un mensaje a CoordinadorDeVentas para que cree una nueva instancia de una Venta a realizar, además de registrarla en su colección (o base de datos, idem que con arriba)
 - Podría decirse que CoordinadorDeVentas no “conoce” a las prendas - conoce a una lista de estas, o una conexión a una base de datos, depende de cómo se implementa la lógica del modelo. Idem con Venta. Por ende no se si las relaciones usadas están adecuadamente aplicadas en este caso.
 
