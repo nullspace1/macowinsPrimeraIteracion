@@ -1,49 +1,34 @@
-# java-base-project
+TPC I : MacoWins
 
-Esta es una plantilla de proyecto diseñada para: 
+Lautaro Moyano - K3053
 
-* Java 8. :warning: Si bien el proyecto no lo limita explícitamente, el comando `mvn verify` no funcionará con versiones mas modernas de Java. 
-* JUnit 5. :warning: La versión 5 de JUnit es la más nueva del framework y presenta algunas diferencias respecto a la versión "clásica" (JUnit 4). Para mayores detalles, ver: 
-  *  [Apunte de herramientas](https://docs.google.com/document/d/1VYBey56M0UU6C0689hAClAvF9ILE6E7nKIuOqrRJnWQ/edit#heading=h.dnwhvummp994)
-  *  [Entrada de Blog (en inglés)](https://www.baeldung.com/junit-5-migration) 
-  *  [Entrada de Blog (en español)](https://www.paradigmadigital.com/dev/nos-espera-junit-5/)
-* Maven 3.3 o superior
+Parte I: Identificación de requerimientos
 
-# Ejecutar tests
+En base a la información provista durante la charla, se identifica la necesidad de algún tipo de aplicación que provea las siguientes funcionalidades:
 
-```
-mvn test
-```
+- Que el usuario (el vendedor, entendería) pueda consultar por una prenda, y conocer su clasificación y su precio.
+- Las prendas deberían de tener un identificador (para poder buscarlas)
+   - Este último es definido en base a un “estado” en el que se encuentra la prenda. El usuario debería poder tener control estos mismos (“...Promoción: Le resta un valor fijo decidido por el usuario.”)
+   - No se menciona si el usuario debería tener control sobre el agregado o quitado de prendas al sistema, ni la definición del precio base. El control de stock tampoco parece ser relevante.
+- Tener un registro de las ventas realizadas y poder determinar las ganancias obtenidas durante un determinado día.
+   - El usuario debería poder seleccionar las prendas que se van a vender, su cantidad y establecer el medio de pago. El sistema entonces debería calcular y devolver     el total a pagar en base a lo anterior.
+- Concretada la venta, esta debería quedar registrada con los siguientes datos:
+   - Prendas vendidas y su cantidad
+   - Fecha de venta
+   - Ganancia total (no dicho explícitamente, pero necesario para la determinación de las ganancias de un dia)
 
-# Validar el proyecto de forma exahustiva
+Parte II: Desarrollo de Solución
 
-```
-mvn clean verify
-```
+Se me ocurrió tener al principio un objeto que opere como una interfaz inicial entre el usuario y el sistema. Sería un “punto de entrada”, permitiendo buscar ropa y “crear” nuevas ventas. No quiero que tenga una cantidad de responsabilidades excesiva - en tanto pueda, que las consultas de datos sobre la ropa y el agregado de productos a un venta a concretar sea realizado por otros objetos.
 
-Este comando hará lo siguiente:
+Dicho esto, el diagrama de clases:
 
- 1. Ejecutará los tests
- 2. Validará las convenciones de formato mediante checkstyle
- 3. Detectará la presencia de (ciertos) code smells
- 4. Validará la cobertura del proyecto
 
-# Entrega del proyecto
 
-Para entregar el proyecto, crear un tag llamado `entrega-final`. Es importante que antes de realizarlo se corra la validación
-explicada en el punto anterior. Se recomienda hacerlo de la siguiente forma:
 
-```
-mvn clean verify && git tag entrega-final && git push origin HEAD --tags
-```
+Algunos comentarios:
 
-# Configuración del IDE (IntelliJ)
+- Para el primer requerimiento, la consulta por una prenda se realiza primero a CoordinadorDeVentas1 - este se encarga de buscar en la colección (o base de datos, lo que sea) de ropa disponible y devolver un objeto de Ropa, al cual podemos realizar todas las consultas pertinentes, o establecer el parámetro de estado.
+Similarmente, para el segundo requerimiento, se le envía un mensaje a CoordinadorDeVentas para que cree una nueva instancia de una Venta a realizar, además de registrarla en su colección (o base de datos, idem que con arriba)
+- Podría decirse que CoordinadorDeVentas no “conoce” a las prendas - conoce a una lista de estas, o una conexión a una base de datos, depende de cómo se implementa la lógica del modelo. Idem con Venta. Por ende no se si las relaciones usadas están adecuadamente aplicadas en este caso.
 
- 1. Tabular con dos espacios: ![Screenshot_2021-04-09_18-23-26](https://user-images.githubusercontent.com/677436/114242543-73e1fe00-9961-11eb-9a61-7e34be9fb8de.png)
- 2. Instalar y configurar Checkstyle:
-    1. Instalar el plugin https://plugins.jetbrains.com/plugin/1065-checkstyle-idea:
-    2. Configurarlo activando los Checks de Google y la versión de Checkstyle `== 8.35`: ![Screenshot_2021-04-09_18-16-13](https://user-images.githubusercontent.com/677436/114242548-75132b00-9961-11eb-972e-28e6e1412979.png)
- 3. Usar fin de linea unix
-    1. En **Settings/Preferences**, ir a a **Editor | Code Style**.
-    2. En la lista **Line separator**, seleccionar `Unix and OS X (\n)`.
- ![Screenshot 2021-04-10 03-49-00](https://user-images.githubusercontent.com/11875266/114260872-c6490c00-99ad-11eb-838f-022acc1903f4.png)
